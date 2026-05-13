@@ -66,4 +66,83 @@ int main()
     solve(1, n);
 
     return 0;
+
+
 }
+
+/*
+branch and bound
+
+#include <iostream>
+using namespace std;
+
+int board[10];
+
+// Arrays for fast checking
+bool column[10];
+bool leftDiagonal[20];
+bool rightDiagonal[20];
+
+// Function to solve N-Queen
+void solve(int row, int n)
+{
+    // If all queens are placed
+    if(row > n)
+    {
+        cout << "\nSolution:\n";
+
+        for(int i = 1; i <= n; i++)
+        {
+            for(int j = 1; j <= n; j++)
+            {
+                if(board[i] == j)
+                    cout << " Q ";
+                else
+                    cout << " - ";
+            }
+            cout << endl;
+        }
+
+        return;
+    }
+
+    // Try every column
+    for(int col = 1; col <= n; col++)
+    {
+        // Check whether position is safe
+        if(column[col] == false &&
+           leftDiagonal[row - col + n] == false &&
+           rightDiagonal[row + col] == false)
+        {
+            // Place queen
+            board[row] = col;
+
+            // Mark column and diagonals as occupied
+            column[col] = true;
+            leftDiagonal[row - col + n] = true;
+            rightDiagonal[row + col] = true;
+
+            // Move to next row
+            solve(row + 1, n);
+
+            // Backtracking
+            column[col] = false;
+            leftDiagonal[row - col + n] = false;
+            rightDiagonal[row + col] = false;
+        }
+    }
+}
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of queens: ";
+    cin >> n;
+
+    solve(1, n);
+
+    return 0;
+}
+
+*/
